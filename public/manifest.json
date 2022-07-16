@@ -1,0 +1,11 @@
+{
+  "name": "PinIt",
+  "short_name": "PinIt",
+  "icons": [{
+    "src": "google-touch-icon.png",
+    "sizes": "512x512"
+  }],
+  "background_color": "#faf7f5",
+  "theme_color": "#65c3c8",
+  "display": "fullscreen"
+}

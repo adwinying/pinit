@@ -12,12 +12,17 @@ import tailwind from "~/tailwind.css"
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "PinIt",
   viewport: "width=device-width,initial-scale=1",
+  "theme-color": "#65c3c8",
 })
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
+  { rel: "icon", href: "favicon.svg" },
+  { rel: "mask-icon", href: "mask-icon.svg", color: "#65c3c8" },
+  { rel: "apple-touch-icon", href: "apple-touch-icon.png" },
+  { rel: "manifest", href: "manifest.json" },
 ]
 
 export default function App() {
