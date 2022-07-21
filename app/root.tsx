@@ -8,6 +8,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react"
 
+import Header from "~/components/Header"
 import tailwind from "~/tailwind.css"
 
 export const meta: MetaFunction = () => ({
@@ -25,6 +26,18 @@ export const links: LinksFunction = () => [
   { rel: "manifest", href: "manifest.json" },
 ]
 
+type LayoutProps = {
+  children: JSX.Element
+}
+function Layout({ children }: LayoutProps) {
+  return (
+    <div className="container mx-auto">
+      <Header />
+      {children}
+    </div>
+  )
+}
+
 export default function App() {
   return (
     <html lang="en" data-theme="cupcake">
@@ -33,7 +46,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <Layout>
+          <Outlet />
+        </Layout>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
