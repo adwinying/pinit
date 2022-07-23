@@ -27,7 +27,8 @@
     "daisyui": "^2.19.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "vitest-mock-extended": "^0.1.10"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.6.4",
