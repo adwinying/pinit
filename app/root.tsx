@@ -1,4 +1,9 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node"
+import type {
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node"
+import { json } from "@remix-run/node"
 import {
   Links,
   LiveReload,
@@ -6,10 +11,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react"
 
 import Header from "~/components/Header"
+import Notification from "~/components/Notification"
 import tailwind from "~/tailwind.css"
+import type { NotificationData } from "~/utils/notification.server"
+import { getNotification } from "~/utils/notification.server"
+import { commitSession, getCurrentSession } from "~/utils/session.server"
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -26,13 +36,35 @@ export const links: LinksFunction = () => [
   { rel: "manifest", href: "manifest.json" },
 ]
 
+type LoaderData = {
+  notification?: NotificationData
+}
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await getCurrentSession(request)
+  const notification = getNotification(session)
+
+  return json<LoaderData>(
+    {
+      notification,
+    },
+    {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    },
+  )
+}
+
 type LayoutProps = {
   children: JSX.Element
 }
 function Layout({ children }: LayoutProps) {
+  const { notification } = useLoaderData<LoaderData>()
+
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-3">
       <Header />
+      {notification && <Notification notification={notification} />}
       {children}
     </div>
   )
