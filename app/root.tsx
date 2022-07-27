@@ -17,6 +17,7 @@ import {
 import Header from "~/components/Header"
 import Notification from "~/components/Notification"
 import tailwind from "~/tailwind.css"
+import { getUser } from "~/utils/auth.server"
 import type { NotificationData } from "~/utils/notification.server"
 import { getNotification } from "~/utils/notification.server"
 import { commitSession, getCurrentSession } from "~/utils/session.server"
@@ -38,14 +39,27 @@ export const links: LinksFunction = () => [
 
 type LoaderData = {
   notification?: NotificationData
+  user?: {
+    id: string
+    username: string
+    profileImgUrl: string
+  }
 }
 export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUser(request)
   const session = await getCurrentSession(request)
   const notification = getNotification(session)
 
   return json<LoaderData>(
     {
       notification,
+      user: user
+        ? {
+            id: user.id,
+            username: user.username,
+            profileImgUrl: user.profileImgUrl,
+          }
+        : undefined,
     },
     {
       headers: {
@@ -59,11 +73,11 @@ type LayoutProps = {
   children: JSX.Element
 }
 function Layout({ children }: LayoutProps) {
-  const { notification } = useLoaderData<LoaderData>()
+  const { user, notification } = useLoaderData<LoaderData>()
 
   return (
     <div className="container mx-auto px-3">
-      <Header />
+      <Header user={user} />
       {notification && <Notification notification={notification} />}
       {children}
     </div>
