@@ -1,39 +1,41 @@
+import type { LoaderFunction } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
+
+import PinsGrid from "~/components/PinsGrid"
+import getPins from "~/libs/getPins"
+
+type LoaderData = {
+  pins: {
+    id: string
+    title: string
+    imageUrl: string
+    username: string
+    userImgUrl: string
+  }[]
+}
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url)
+  const count = 20
+  const page = Number(url.searchParams.get("page") ?? "1")
+  const offset = (page - 1) * count
+
+  const pins = await getPins({ offset, count })
+
+  const response: LoaderData = {
+    pins: pins.map(({ id, title, imageUrl, owner }) => ({
+      id,
+      title,
+      imageUrl,
+      username: owner.username,
+      userImgUrl: owner.profileImgUrl,
+    })),
+  }
+
+  return response
+}
+
 export default function Index() {
-  return (
-    <div>
-      <h1 className="mb-3 text-4xl font-bold">Welcome to Remix</h1>
-      <ul className="ml-6">
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-            className="link link-neutral"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-            className="link link-neutral"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/docs"
-            rel="noreferrer"
-            className="link link-neutral"
-          >
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
-  )
+  const { pins } = useLoaderData<LoaderData>()
+
+  return <PinsGrid pins={pins} className="my-5" />
 }
