@@ -34,13 +34,13 @@ export default function Header({ user = undefined }: Props) {
             <div>
               <Link
                 to="pins/new"
-                className="btn btn-primary btn-sm hidden md:flex"
+                className="btn btn-primary btn-sm hidden sm:flex"
               >
                 <FaPlus className="mr-1" />
                 New Pin
               </Link>
             </div>
-            <div className="dropdown-end dropdown">
+            <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
                 className="btn btn-ghost btn-sm m-1 flex pl-0 normal-case"
@@ -75,7 +75,7 @@ export default function Header({ user = undefined }: Props) {
                 </li>
               </ul>
             </div>
-            <div className="fixed bottom-5 right-5 md:hidden">
+            <div className="fixed bottom-5 right-5 z-50 sm:hidden">
               <Link to="/pins/new" className="btn btn-primary btn-circle">
                 <FaPlus className="text-xl" />
               </Link>
