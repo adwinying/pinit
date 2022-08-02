@@ -5,14 +5,18 @@ import type {
 } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
   useLoaderData,
 } from "@remix-run/react"
+
+import PageTitle from "./components/PageTitle"
 
 import Header from "~/components/Header"
 import Notification from "~/components/Notification"
@@ -69,11 +73,64 @@ export const loader: LoaderFunction = async ({ request }) => {
   )
 }
 
+type ErrorBoundaryProps = {
+  error: Error
+}
+export function ErrorBoundary({ error }: ErrorBoundaryProps) {
+  // eslint-disable-next-line no-console
+  console.error(error)
+
+  return (
+    <Page>
+      <>
+        <PageTitle>Oops, something went wrong!</PageTitle>
+        <p>
+          Try again later, or go back to the{" "}
+          <Link to="/" className="link">
+            home page
+          </Link>
+          .
+        </p>
+        {process.env.NODE_ENV === "development" && (
+          <div className="mockup-code mt-3 bg-error text-error-content">
+            <pre className="whitespace-pre-wrap">
+              <code>{error.toString()}</code>
+            </pre>
+          </div>
+        )}
+      </>
+    </Page>
+  )
+}
+
+export function CatchBoundary() {
+  const caught = useCatch()
+
+  if (caught.status !== 404)
+    return <ErrorBoundary error={new Error(JSON.stringify(caught))} />
+
+  return (
+    <Page>
+      <>
+        <PageTitle>404: Not Found</PageTitle>
+        <p>
+          The page you are looking for does not exist. Perhaps you would like to
+          go to the{" "}
+          <Link to="/" className="link">
+            home page
+          </Link>
+          ?
+        </p>
+      </>
+    </Page>
+  )
+}
+
 type LayoutProps = {
   children: JSX.Element
 }
 function Layout({ children }: LayoutProps) {
-  const { user, notification } = useLoaderData<LoaderData>()
+  const { user, notification } = useLoaderData<LoaderData>() ?? {}
 
   return (
     <div className="container mx-auto px-3">
@@ -84,7 +141,10 @@ function Layout({ children }: LayoutProps) {
   )
 }
 
-export default function App() {
+type PageProps = {
+  children: JSX.Element
+}
+function Page({ children }: PageProps) {
   return (
     <html lang="en" data-theme="cupcake">
       <head>
@@ -92,13 +152,19 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Layout>
-          <Outlet />
-        </Layout>
+        <Layout>{children}</Layout>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
+  )
+}
+
+export default function App() {
+  return (
+    <Page>
+      <Outlet />
+    </Page>
   )
 }
