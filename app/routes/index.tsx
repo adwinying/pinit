@@ -1,6 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
+import Pagination from "~/components/Pagination"
 import PinsGrid from "~/components/PinsGrid"
 import getPins from "~/libs/getPins"
 
@@ -12,6 +13,12 @@ type LoaderData = {
     username: string
     userImgUrl: string
   }[]
+  pagination: {
+    baseUrl: string
+    perPage: number
+    currentPage: number
+    total: number
+  }
 }
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url)
@@ -29,13 +36,29 @@ export const loader: LoaderFunction = async ({ request }) => {
       username: owner.username,
       userImgUrl: owner.profileImgUrl,
     })),
+    pagination: {
+      baseUrl: url.toString(),
+      perPage: count,
+      currentPage: page,
+      total: 100,
+    },
   }
 
   return response
 }
 
 export default function Index() {
-  const { pins } = useLoaderData<LoaderData>()
+  const { pins, pagination } = useLoaderData<LoaderData>()
 
-  return <PinsGrid pins={pins} className="my-5" />
+  return (
+    <>
+      <PinsGrid pins={pins} className="my-5" />
+      <Pagination
+        baseUrl={pagination.baseUrl}
+        total={pagination.total}
+        perPage={pagination.perPage}
+        currentPage={pagination.currentPage}
+      />
+    </>
+  )
 }
