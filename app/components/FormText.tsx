@@ -1,3 +1,5 @@
+import { useField, useIsSubmitting } from "remix-validated-form"
+
 type Props = {
   label: string
   name: string
@@ -13,10 +15,11 @@ export default function FormText({
   name,
   type = "text",
   placeholder = "",
-  defaultValue = "",
   disabled = false,
-  errors = [],
 }: Props) {
+  const { error, getInputProps } = useField(name)
+  const isSubmitting = useIsSubmitting()
+
   return (
     <div className="form-control">
       <label htmlFor={name} className="label">
@@ -24,21 +27,21 @@ export default function FormText({
       </label>
 
       <input
-        id={name}
-        type={type}
-        name={name}
-        defaultValue={defaultValue}
-        disabled={disabled}
-        className={`input input-bordered ${errors.length ? "input-error" : ""}`}
-        placeholder={placeholder}
+        {...getInputProps({
+          id: name,
+          type,
+          disabled: isSubmitting || disabled,
+          placeholder,
+          className: `input input-bordered ${error ? "input-error" : ""}`,
+        })}
       />
 
-      {errors && (
+      {error && (
         <label
           className="label label-text-alt text-error"
           htmlFor={`${name}-error`}
         >
-          {errors[0]}
+          {error}
         </label>
       )}
     </div>

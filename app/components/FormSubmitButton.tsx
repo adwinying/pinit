@@ -1,16 +1,16 @@
 import { FaSync } from "react-icons/fa"
+import { useIsSubmitting, useIsValid } from "remix-validated-form"
 
-type Props = {
-  isSubmitting: boolean
-}
+export default function FormSubmitButton() {
+  const isSubmitting = useIsSubmitting()
+  const isValid = useIsValid()
 
-export default function FormSubmitButton({ isSubmitting }: Props) {
   return (
     <button
       type="submit"
       className="btn btn-primary mt-5"
       cy-data="formSubmitButton"
-      disabled={isSubmitting}
+      disabled={isSubmitting || !isValid}
     >
       {isSubmitting ? (
         <>
