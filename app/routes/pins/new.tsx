@@ -1,11 +1,19 @@
+import type { ActionFunction, MetaFunction } from "@remix-run/node"
+import { redirect } from "@remix-run/node"
 import { withZod } from "@remix-validated-form/with-zod"
-import { ValidatedForm } from "remix-validated-form"
+import { ValidatedForm, validationError } from "remix-validated-form"
 import { z } from "zod"
 import { zfd } from "zod-form-data"
 
+import FormInput from "~/components/FormInput"
 import FormSubmitButton from "~/components/FormSubmitButton"
-import FormText from "~/components/FormText"
 import PageTitle from "~/components/PageTitle"
+import createPin from "~/libs/createPin"
+import { requireUser } from "~/utils/auth.server"
+
+export const meta: MetaFunction = () => ({
+  title: "New Pin - Pinit",
+})
 
 const validator = withZod(
   zfd.formData({
@@ -18,6 +26,21 @@ const validator = withZod(
   }),
 )
 
+export const action: ActionFunction = async ({ request }) => {
+  const user = await requireUser(request)
+  const result = await validator.validate(await request.formData())
+
+  if (result.error) return validationError(result.error, result.submittedData)
+
+  const pin = await createPin({
+    owner: user,
+    title: result.data.title,
+    imageUrl: result.data.imageUrl,
+  })
+
+  return redirect(`/profile/${user.username}?new_pin_id=${pin.id}`)
+}
+
 export default function NewPin() {
   return (
     <>
@@ -28,10 +51,8 @@ export default function NewPin() {
         validator={validator}
         className="w-full sm:max-w-lg"
       >
-        <FormText label="Title" name="title" placeholder="some title" />
-
-        <FormText label="Image URL" name="imageUrl" />
-
+        <FormInput label="Title" name="title" placeholder="Some Title" />
+        <FormInput label="Image URL" name="imageUrl" />
         <FormSubmitButton />
       </ValidatedForm>
     </>

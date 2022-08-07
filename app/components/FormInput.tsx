@@ -1,16 +1,14 @@
-import { useField, useIsSubmitting } from "remix-validated-form"
+import { useField } from "remix-validated-form"
 
 type Props = {
   label: string
   name: string
   type?: string
-  defaultValue?: string
   placeholder?: string
   disabled?: boolean
-  errors?: string[]
 }
 
-export default function FormText({
+export default function FormInput({
   label,
   name,
   type = "text",
@@ -18,7 +16,6 @@ export default function FormText({
   disabled = false,
 }: Props) {
   const { error, getInputProps } = useField(name)
-  const isSubmitting = useIsSubmitting()
 
   return (
     <div className="form-control">
@@ -30,8 +27,8 @@ export default function FormText({
         {...getInputProps({
           id: name,
           type,
-          disabled: isSubmitting || disabled,
           placeholder,
+          disabled,
           className: `input input-bordered ${error ? "input-error" : ""}`,
         })}
       />

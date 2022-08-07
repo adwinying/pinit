@@ -9,7 +9,6 @@ export default function FormSubmitButton() {
     <button
       type="submit"
       className="btn btn-primary mt-5"
-      cy-data="formSubmitButton"
       disabled={isSubmitting || !isValid}
     >
       {isSubmitting ? (
