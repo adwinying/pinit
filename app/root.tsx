@@ -35,10 +35,10 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
-  { rel: "icon", href: "favicon.svg" },
-  { rel: "mask-icon", href: "mask-icon.svg", color: "#65c3c8" },
-  { rel: "apple-touch-icon", href: "apple-touch-icon.png" },
-  { rel: "manifest", href: "manifest.json" },
+  { rel: "icon", href: "/favicon.svg" },
+  { rel: "mask-icon", href: "/mask-icon.svg", color: "#65c3c8" },
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+  { rel: "manifest", href: "/manifest.json" },
 ]
 
 type LoaderData = {
