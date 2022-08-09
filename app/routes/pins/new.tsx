@@ -1,4 +1,8 @@
-import type { ActionFunction, MetaFunction } from "@remix-run/node"
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 import { withZod } from "@remix-validated-form/with-zod"
 import { ValidatedForm, validationError } from "remix-validated-form"
@@ -14,6 +18,12 @@ import { requireUser } from "~/utils/auth.server"
 export const meta: MetaFunction = () => ({
   title: "New Pin - Pinit",
 })
+
+export const loader: LoaderFunction = async ({ request }) => {
+  await requireUser(request)
+
+  return {}
+}
 
 const validator = withZod(
   zfd.formData({
