@@ -48,7 +48,7 @@ export const getUser = async (request: Request) => {
 export const requireUser = async (request: Request) => {
   const user = await getUser(request)
 
-  if (!user) throw redirect("login/unauthenticated")
+  if (!user) throw redirect("/login/unauthenticated")
 
   return user
 }
