@@ -1,6 +1,6 @@
 import type { Pin } from "@prisma/client"
 
-import { prismaMock } from "~/../tests/database"
+import { dbMock } from "~/../tests/mockDb"
 import getPins from "~/libs/getPins"
 
 describe("getPins", () => {
@@ -14,13 +14,13 @@ describe("getPins", () => {
   }))
 
   it("should able to get pins", async () => {
-    prismaMock.pin.findMany.mockResolvedValue(pins)
+    dbMock.pin.findMany.mockResolvedValue(pins)
 
     const offset = 100
     const count = 200
     const result = await getPins({ offset, count })
 
-    expect(prismaMock.pin.findMany).toHaveBeenCalledWith({
+    expect(dbMock.pin.findMany).toHaveBeenCalledWith({
       orderBy: { updatedAt: "desc" },
       skip: offset,
       take: count,
@@ -31,11 +31,11 @@ describe("getPins", () => {
   })
 
   it("should use default values if no params passed", async () => {
-    prismaMock.pin.findMany.mockResolvedValue(pins)
+    dbMock.pin.findMany.mockResolvedValue(pins)
 
     const result = await getPins({})
 
-    expect(prismaMock.pin.findMany).toHaveBeenCalledWith({
+    expect(dbMock.pin.findMany).toHaveBeenCalledWith({
       orderBy: { updatedAt: "desc" },
       skip: 0,
       take: 20,

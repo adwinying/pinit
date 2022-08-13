@@ -1,6 +1,6 @@
 import type { Pin, User } from "@prisma/client"
 
-import { prismaMock } from "~/../tests/database"
+import { dbMock } from "~/../tests/mockDb"
 import createPin from "~/libs/createPin"
 
 describe("createPin", () => {
@@ -23,7 +23,7 @@ describe("createPin", () => {
   }
 
   it("should be able to create pin", async () => {
-    prismaMock.pin.create.mockResolvedValue(pin)
+    dbMock.pin.create.mockResolvedValue(pin)
 
     const result = await createPin({
       owner: user,
@@ -31,7 +31,7 @@ describe("createPin", () => {
       imageUrl: pin.imageUrl,
     })
 
-    expect(prismaMock.pin.create).toHaveBeenCalledWith({
+    expect(dbMock.pin.create).toHaveBeenCalledWith({
       data: {
         title: pin.title,
         imageUrl: pin.imageUrl,

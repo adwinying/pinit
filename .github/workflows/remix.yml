@@ -7,6 +7,8 @@ jobs:
   unit_test:
     name: Unit Test
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: "file:./test.db"
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2

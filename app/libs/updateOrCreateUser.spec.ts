@@ -1,6 +1,6 @@
 import type { User } from "@prisma/client"
 
-import { prismaMock } from "~/../tests/database"
+import { dbMock } from "~/../tests/mockDb"
 import { updateOrCreateUser } from "~/libs/updateOrCreateUser"
 
 describe("updateOrCreateUser", () => {
@@ -18,7 +18,7 @@ describe("updateOrCreateUser", () => {
   }
 
   it("should be able to upsert user", async () => {
-    prismaMock.user.upsert.mockResolvedValue(user)
+    dbMock.user.upsert.mockResolvedValue(user)
 
     const result = await updateOrCreateUser({
       twitterId,
@@ -26,7 +26,7 @@ describe("updateOrCreateUser", () => {
       profileImgUrl,
     })
 
-    expect(prismaMock.user.upsert).toHaveBeenCalledWith({
+    expect(dbMock.user.upsert).toHaveBeenCalledWith({
       where: { twitterId },
       create: {
         twitterId,
