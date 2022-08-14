@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 
+import { prepareRealDb } from "~/../tests/realDb"
+
 let client: PrismaClient
 
 declare global {
@@ -12,6 +14,20 @@ declare global {
 if (process.env.NODE_ENV === "production") {
   client = new PrismaClient()
   client.$connect()
+} else if (process.env.NODE_ENV === "test") {
+  if (!global.__db) {
+    // create new db file for testing
+    prepareRealDb()
+
+    // create new connection with new created db file
+    global.__db = new PrismaClient({
+      datasources: {
+        db: { url: process.env.DATABASE_URL },
+      },
+    })
+    global.__db.$connect()
+  }
+  client = global.__db
 } else {
   if (!global.__db) {
     global.__db = new PrismaClient()

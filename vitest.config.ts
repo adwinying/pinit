@@ -12,5 +12,6 @@ export default defineConfig({
   test: {
     globals: true,
     restoreMocks: true,
+    environment: "happy-dom",
   },
 })
