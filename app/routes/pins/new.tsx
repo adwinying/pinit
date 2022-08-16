@@ -3,6 +3,7 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/node"
+import { json } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 import { withZod } from "@remix-validated-form/with-zod"
 import { ValidatedForm, validationError } from "remix-validated-form"
@@ -22,7 +23,7 @@ export const meta: MetaFunction = () => ({
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUser(request)
 
-  return {}
+  return json({})
 }
 
 const validator = withZod(
