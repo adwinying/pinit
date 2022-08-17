@@ -1,3 +1,4 @@
+import type { ChangeEvent } from "react"
 import { useField } from "remix-validated-form"
 
 type Props = {
@@ -6,6 +7,7 @@ type Props = {
   type?: string
   placeholder?: string
   disabled?: boolean
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function FormInput({
@@ -14,6 +16,7 @@ export default function FormInput({
   type = "text",
   placeholder = "",
   disabled = false,
+  onChange = () => {},
 }: Props) {
   const { error, getInputProps } = useField(name)
 
@@ -30,6 +33,7 @@ export default function FormInput({
           placeholder,
           disabled,
           className: `input input-bordered ${error ? "input-error" : ""}`,
+          onChange,
         })}
       />
 

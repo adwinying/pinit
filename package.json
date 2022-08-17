@@ -31,6 +31,7 @@
     "daisyui": "^2.19.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-dropzone": "^14.2.2",
     "react-icons": "^4.4.0",
     "remix-auth": "^3.2.2",
     "remix-auth-twitter": "^0.1.0",
