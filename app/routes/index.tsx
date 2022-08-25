@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react"
 import Pagination from "~/components/Pagination"
 import PinsGrid from "~/components/PinsGrid"
 import getPins from "~/libs/getPins"
+import getPinsCount from "~/libs/getPinsCount"
 
 type LoaderData = {
   pins: {
@@ -27,6 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const offset = (page - 1) * count
 
   const pins = await getPins({ offset, count })
+  const total = await getPinsCount()
 
   const response: LoaderData = {
     pins: pins.map(({ id, title, imageUrl, owner }) => ({
@@ -40,7 +42,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       baseUrl: url.toString(),
       perPage: count,
       currentPage: page,
-      total: 100,
+      total,
     },
   }
 

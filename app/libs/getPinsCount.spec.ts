@@ -1,8 +1,7 @@
-import getPinsCount from "./getPinsCount"
-
 import { dbMock } from "~/../tests/mockDb"
+import getPinsCount from "~/libs/getPinsCount"
 
-test("getPinsCount", () => {
+describe("getPinsCount", () => {
   it("returns the total number of pins", async () => {
     const count = 69
 
