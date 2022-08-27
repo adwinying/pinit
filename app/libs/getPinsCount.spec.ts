@@ -1,5 +1,5 @@
 import { dbMock } from "~/../tests/mockDb"
-import getPinsCount from "~/libs/getPinsCount"
+import { getPinsCount } from "~/libs/getPinsCount"
 
 describe("getPinsCount", () => {
   it("returns the total number of pins", async () => {
@@ -9,7 +9,7 @@ describe("getPinsCount", () => {
 
     const result = await getPinsCount()
 
-    expect(dbMock.pin.count).toHaveBeenCalled()
+    expect(dbMock.pin.count).toHaveBeenCalledOnce()
     expect(result).toEqual(count)
   })
 })

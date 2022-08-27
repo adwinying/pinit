@@ -16,7 +16,7 @@ import { zfd } from "zod-form-data"
 import FormInput from "~/components/FormInput"
 import FormSubmitButton from "~/components/FormSubmitButton"
 import PageTitle from "~/components/PageTitle"
-import createPin from "~/libs/createPin"
+import { createPin } from "~/libs/createPin"
 import { requireUser } from "~/utils/auth.server"
 
 export const meta: MetaFunction = () => ({

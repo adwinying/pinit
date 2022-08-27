@@ -3,8 +3,8 @@ import { useLoaderData } from "@remix-run/react"
 
 import Pagination from "~/components/Pagination"
 import PinsGrid from "~/components/PinsGrid"
-import getPins from "~/libs/getPins"
-import getPinsCount from "~/libs/getPinsCount"
+import { getPins } from "~/libs/getPins"
+import { getPinsCount } from "~/libs/getPinsCount"
 
 type LoaderData = {
   pins: {

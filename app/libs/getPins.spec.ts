@@ -1,7 +1,7 @@
 import type { Pin } from "@prisma/client"
 
 import { dbMock } from "~/../tests/mockDb"
-import getPins from "~/libs/getPins"
+import { getPins } from "~/libs/getPins"
 
 describe("getPins", () => {
   const pins: Pin[] = Array.from({ length: 10 }).map((_, i) => ({

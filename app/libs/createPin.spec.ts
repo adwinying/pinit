@@ -1,7 +1,7 @@
 import type { Pin, User } from "@prisma/client"
 
 import { dbMock } from "~/../tests/mockDb"
-import createPin from "~/libs/createPin"
+import { createPin } from "~/libs/createPin"
 
 describe("createPin", () => {
   const pin: Pin = {

@@ -5,7 +5,7 @@ export type GetPins = {
   count?: number
 }
 
-export default async function getPins({ offset = 0, count = 20 }: GetPins) {
+export async function getPins({ offset = 0, count = 20 }: GetPins) {
   return db.pin.findMany({
     orderBy: { updatedAt: "desc" },
     skip: offset,

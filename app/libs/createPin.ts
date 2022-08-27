@@ -8,7 +8,7 @@ export type CreatePin = {
   imageUrl: string
 }
 
-export default async function createPin({ owner, title, imageUrl }: CreatePin) {
+export async function createPin({ owner, title, imageUrl }: CreatePin) {
   return db.pin.create({
     data: {
       title,
