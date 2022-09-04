@@ -2,11 +2,7 @@
 module.exports = {
   content: ["./app/**/*.{ts,tsx,js,jsx}"],
   theme: {
-    extend: {
-      gridTemplateColumns: {
-        pins: "repeat(auto-fit, minmax(16rem, 1fr))",
-      },
-    },
+    extend: {},
   },
   plugins: [require("daisyui")],
   daisyui: {
