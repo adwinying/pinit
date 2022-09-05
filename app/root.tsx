@@ -133,7 +133,7 @@ function Layout({ children }: LayoutProps) {
   const { user, notification } = useLoaderData<LoaderData>() ?? {}
 
   return (
-    <div className="container mx-auto px-3">
+    <div className="container mx-auto px-3 pb-5">
       <Header user={user} />
       {notification && <Notification notification={notification} />}
       {children}
