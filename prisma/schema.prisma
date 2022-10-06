@@ -18,6 +18,7 @@ model User {
   pins          Pin[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  likes         Like[]
 }
 
 model Pin {
@@ -26,7 +27,19 @@ model Pin {
   imageUrl  String
   owner     User     @relation(fields: [ownerId], references: [id])
   ownerId   String
-  // likedBy User[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  likes     Like[]
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  pin       Pin      @relation(fields: [pinId], references: [id])
+  pinId     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, pinId])
 }
