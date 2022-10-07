@@ -18,6 +18,6 @@ export async function getUserPins({
     orderBy: { updatedAt: "desc" },
     skip: offset,
     take: count,
-    include: { owner: true },
+    include: { owner: true, likes: true },
   })
 }

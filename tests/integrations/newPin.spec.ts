@@ -7,7 +7,7 @@ import { action, loader } from "~/routes/pins/new"
 import db from "~/utils/db.server"
 
 describe("new pin", () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     installGlobals()
     prepareRealDb()
   })

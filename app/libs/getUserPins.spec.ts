@@ -34,7 +34,7 @@ describe("getUserPins", () => {
       orderBy: { updatedAt: "desc" },
       skip: offset,
       take: count,
-      include: { owner: true },
+      include: { owner: true, likes: true },
     })
 
     expect(result).toEqual(pins)
@@ -50,7 +50,7 @@ describe("getUserPins", () => {
       orderBy: { updatedAt: "desc" },
       skip: 0,
       take: 20,
-      include: { owner: true },
+      include: { owner: true, likes: true },
     })
 
     expect(result).toEqual(pins)

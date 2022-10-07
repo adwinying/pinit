@@ -10,6 +10,6 @@ export async function getPins({ offset = 0, count = 20 }: GetPins) {
     orderBy: { updatedAt: "desc" },
     skip: offset,
     take: count,
-    include: { owner: true },
+    include: { owner: true, likes: true },
   })
 }
