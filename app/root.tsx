@@ -41,7 +41,7 @@ export const links: LinksFunction = () => [
   { rel: "manifest", href: "/manifest.json" },
 ]
 
-type LoaderData = {
+export type LoaderData = {
   notification?: NotificationData
   user?: {
     id: string
@@ -130,11 +130,11 @@ type LayoutProps = {
   children: JSX.Element
 }
 function Layout({ children }: LayoutProps) {
-  const { user, notification } = useLoaderData<LoaderData>() ?? {}
+  const { notification } = useLoaderData<LoaderData>() ?? {}
 
   return (
     <div className="container mx-auto px-3 pb-5">
-      <Header user={user} />
+      <Header />
       {notification && <Notification notification={notification} />}
       {children}
     </div>

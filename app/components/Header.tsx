@@ -7,14 +7,10 @@ import {
   FaUser,
 } from "react-icons/fa"
 
-type Props = {
-  user?: {
-    id: string
-    username: string
-    profileImgUrl: string
-  }
-}
-export default function Header({ user = undefined }: Props) {
+import { useUser } from "~/hooks/useUser"
+
+export default function Header() {
+  const user = useUser()
   const isLoggedIn = !!user
 
   return (
@@ -40,7 +36,7 @@ export default function Header({ user = undefined }: Props) {
                 New Pin
               </Link>
             </div>
-            <div className="dropdown dropdown-end">
+            <div className="dropdown-end dropdown">
               <label
                 tabIndex={0}
                 className="btn btn-ghost btn-sm m-1 flex pl-0 normal-case"
