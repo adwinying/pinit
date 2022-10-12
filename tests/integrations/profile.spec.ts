@@ -90,13 +90,21 @@ describe("profile page", () => {
     }))
 
     const user = await db.user.create({ data: userData })
-    await Promise.all(
+    const createdPins = await Promise.all(
       pinsData.map((pin) =>
         db.pin.create({ data: { ...pin, ownerId: user.id } }),
       ),
     )
+    await Promise.all(
+      createdPins.slice(0, 10).map((pin) =>
+        db.like.create({
+          data: { userId: user.id, pinId: pin.id },
+        }),
+      ),
+    )
     const pins = await db.pin.findMany({
       orderBy: { updatedAt: "desc" },
+      include: { likes: true },
     })
 
     const request = new Request("http:///profile")
@@ -107,12 +115,13 @@ describe("profile page", () => {
     })
     const loaderData = await response.json()
 
-    const expected = pins.map(({ id, title, imageUrl }) => ({
+    const expected = pins.map(({ id, title, imageUrl, likes }) => ({
       id,
       title,
       imageUrl,
       username: user.username,
       userImgUrl: user.profileImgUrl,
+      likedBy: likes.map(({ userId }) => userId),
     }))
 
     expect(response.status).toEqual(200)
@@ -197,6 +206,7 @@ describe("profile page", () => {
       imageUrl,
       username: user.username,
       userImgUrl: user.profileImgUrl,
+      likedBy: [],
     }))
 
     expect(response.status).toEqual(200)

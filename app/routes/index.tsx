@@ -13,6 +13,7 @@ type LoaderData = {
     imageUrl: string
     username: string
     userImgUrl: string
+    likedBy: string[]
   }[]
   pagination: {
     baseUrl: string
@@ -31,12 +32,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   const total = await getPinsCount()
 
   const response: LoaderData = {
-    pins: pins.map(({ id, title, imageUrl, owner }) => ({
+    pins: pins.map(({ id, title, imageUrl, owner, likes }) => ({
       id,
       title,
       imageUrl,
       username: owner.username,
       userImgUrl: owner.profileImgUrl,
+      likedBy: likes.map(({ userId }) => userId),
     })),
     pagination: {
       baseUrl: url.toString(),

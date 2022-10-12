@@ -7,6 +7,7 @@ type Props = {
     imageUrl: string
     username: string
     userImgUrl: string
+    likedBy: string[]
   }[]
   className?: string
 }
@@ -19,10 +20,12 @@ export default function PinsGrid({ pins, className = "" }: Props) {
       {pins.map((pin) => (
         <PinCard
           key={pin.id}
+          id={pin.id}
           pinImgUrl={pin.imageUrl}
           pinCaption={pin.title}
           username={pin.username}
           profileImgUrl={pin.userImgUrl}
+          likedBy={pin.likedBy}
         />
       ))}
     </div>
