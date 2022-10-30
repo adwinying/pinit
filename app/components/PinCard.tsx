@@ -1,6 +1,6 @@
 import { Link, useFetcher } from "@remix-run/react"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { FaRegStar, FaStar } from "react-icons/fa"
+import { FaRegStar, FaStar, FaSync, FaTrash } from "react-icons/fa"
 
 import { useUser } from "~/hooks/useUser"
 
@@ -22,7 +22,8 @@ export default function PinCard({
 }: Props) {
   const [key, setKey] = useState(0)
   const cardRef = useRef<HTMLDivElement>(null)
-  const like = useFetcher()
+  const likePin = useFetcher()
+  const deletePin = useFetcher()
   const user = useUser()
   const isLikedByUser = useMemo(() => {
     if (!user) return false
@@ -64,6 +65,16 @@ export default function PinCard({
       ref={cardRef}
       key={key}
     >
+      {deletePin.state !== "idle" && (
+        <div
+          className="absolute top-0 bottom-0 left-0 right-0
+          flex items-center justify-center bg-gray-500/70 text-white"
+        >
+          <FaSync className="mr-2 animate-spin" />
+          Deleting...
+        </div>
+      )}
+
       <figure>
         <img
           src={pinImgUrl}
@@ -87,8 +98,8 @@ export default function PinCard({
             <span>{username}</span>
           </Link>
 
-          <div>
-            <like.Form method="post" action={`/pins/${id}/like`}>
+          <div className="flex">
+            <likePin.Form method="post" action={`/pins/${id}/like`}>
               <button
                 type="submit"
                 className="btn btn-ghost btn-sm space-x-1 text-lg text-yellow-500"
@@ -96,7 +107,18 @@ export default function PinCard({
                 {isLikedByUser ? <FaStar /> : <FaRegStar />}
                 <span>{likedBy.length}</span>
               </button>
-            </like.Form>
+            </likePin.Form>
+
+            {username === user?.username && (
+              <deletePin.Form method="post" action={`/pins/${id}/delete`}>
+                <button
+                  type="submit"
+                  className="btn btn-ghost btn-sm space-x-1 text-lg text-red-500"
+                >
+                  <FaTrash />
+                </button>
+              </deletePin.Form>
+            )}
           </div>
         </div>
       </div>
