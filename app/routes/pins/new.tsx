@@ -125,6 +125,7 @@ function ImageDropzone({
       {imageUrl && (
         <div className="text-right">
           <button
+            type="button"
             className="btn btn-error btn-sm mt-3"
             onClick={(e) => {
               e.preventDefault()
