@@ -34,9 +34,9 @@ model Pin {
 
 model Like {
   id        String   @id @default(uuid())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  pin       Pin      @relation(fields: [pinId], references: [id])
+  pin       Pin      @relation(fields: [pinId], references: [id], onDelete: Cascade)
   pinId     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
