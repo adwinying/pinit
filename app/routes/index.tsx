@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 import Pagination from "~/components/Pagination"
@@ -48,7 +49,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     },
   }
 
-  return response
+  return json<LoaderData>(response)
 }
 
 export default function Index() {
