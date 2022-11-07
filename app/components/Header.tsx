@@ -36,7 +36,7 @@ export default function Header() {
                 New Pin
               </Link>
             </div>
-            <div className="dropdown-end dropdown">
+            <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
                 className="btn btn-ghost btn-sm m-1 flex pl-0 normal-case"
