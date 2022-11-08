@@ -14,6 +14,7 @@
     "lint": "run-s -l lint:*",
     "lint:es": "eslint \"{app,prisma,test,cypress}/**/*.{js,jsx,ts,tsx}\"",
     "lint:ts": "tsc --noEmit --project tsconfig.json",
+    "lint:cypress": "tsc --noEmit --project ./cypress/tsconfig.json",
     "db:migrate": "run-p -l db:migrate:*",
     "db:migrate:dev": "npx prisma migrate dev",
     "db:migrate:test": "env-cmd -f .env.test npx prisma db push --accept-data-loss",
