@@ -25,18 +25,37 @@ declare global {
        *    cy.login({ email: 'test@example.com' })
        */
       login: typeof login
+
+      /**
+       * Seed database with given data.
+       *
+       * @memberof Chainable
+       * @example
+       *    cy.seed({ users: [{ twitterId: 'test', username: 'test', profileImgUrl: 'test.png' }] })
+       */
+      seed: typeof seed
     }
   }
 }
 
-type ScriptName = "login"
+type ScriptName = "login" | "seed"
 export type ScriptInput = {
   login: { user: Prisma.UserCreateInput }
+  seed: {
+    users?: Prisma.UserUncheckedCreateInput[]
+    pins?: Prisma.PinUncheckedCreateInput[]
+    likes?: Prisma.LikeUncheckedCreateInput[]
+  }
 }
 export type ScriptOutput = {
   login: {
     user: User
     session: string
+  }
+  seed: {
+    users?: User[]
+    pins?: Pin[]
+    likes?: Like[]
   }
 }
 
@@ -70,5 +89,10 @@ function login(user?: Partial<Prisma.UserCreateInput>) {
   })
 }
 
+function seed(data: ScriptInput["seed"]) {
+  return runScript("seed", data)
+}
+
 Cypress.Commands.add("resetDb", resetDb)
 Cypress.Commands.add("login", login)
+Cypress.Commands.add("seed", seed)
