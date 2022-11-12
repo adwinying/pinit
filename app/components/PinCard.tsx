@@ -21,7 +21,7 @@ export default function PinCard({
   likedBy,
 }: Props) {
   const [key, setKey] = useState(0)
-  const cardRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLLIElement>(null)
   const likePin = useFetcher()
   const deletePin = useFetcher()
   const user = useUser()
@@ -60,7 +60,7 @@ export default function PinCard({
   }, [])
 
   return (
-    <div
+    <li
       className="card card-compact bg-white shadow-xl"
       ref={cardRef}
       key={key}
@@ -103,8 +103,13 @@ export default function PinCard({
               <button
                 type="submit"
                 className="btn btn-ghost btn-sm space-x-1 text-lg text-yellow-500"
+                aria-label={isLikedByUser ? "Unlike Pin" : "Like Pin"}
               >
-                {isLikedByUser ? <FaStar /> : <FaRegStar />}
+                {isLikedByUser ? (
+                  <FaStar aria-hidden />
+                ) : (
+                  <FaRegStar aria-hidden />
+                )}
                 <span>{likedBy.length}</span>
               </button>
             </likePin.Form>
@@ -114,14 +119,15 @@ export default function PinCard({
                 <button
                   type="submit"
                   className="btn btn-ghost btn-sm space-x-1 text-lg text-red-500"
+                  aria-label="Delete Pin"
                 >
-                  <FaTrash />
+                  <FaTrash aria-hidden />
                 </button>
               </deletePin.Form>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </li>
   )
 }

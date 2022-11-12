@@ -31,8 +31,9 @@ export default function Header() {
               <Link
                 to="pins/new"
                 className="btn btn-primary btn-sm hidden sm:flex"
+                role="button"
               >
-                <FaPlus className="mr-1" />
+                <FaPlus className="mr-1" aria-hidden />
                 New Pin
               </Link>
             </div>

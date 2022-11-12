@@ -13,7 +13,7 @@ type Props = {
 }
 export default function PinsGrid({ pins, className = "" }: Props) {
   return (
-    <div
+    <ul
       className={`grid auto-rows-[1rem] grid-cols-1 items-start gap-5
         md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 ${className}`}
     >
@@ -28,6 +28,6 @@ export default function PinsGrid({ pins, className = "" }: Props) {
           likedBy={pin.likedBy}
         />
       ))}
-    </div>
+    </ul>
   )
 }
