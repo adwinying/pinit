@@ -29,7 +29,10 @@ export default function Pagination({
   }
 
   return (
-    <div className="mb-6 items-center justify-between space-y-1">
+    <nav
+      className="mb-6 items-center justify-between space-y-1"
+      aria-label="Pagination"
+    >
       <span>
         Showing {start.toLocaleString()} - {end.toLocaleString()} of{" "}
         {total.toLocaleString()}
@@ -46,11 +49,12 @@ export default function Pagination({
               data-page={page}
               to={getPageUrl(page)}
               prefetch="intent"
+              aria-label={`Page ${page}`}
             >
               {page}
             </Link>
           ))}
       </div>
-    </div>
+    </nav>
   )
 }

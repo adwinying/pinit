@@ -60,23 +60,28 @@ describe("index page", () => {
     })
   })
 
-  // cy.seed({
-  //   users: [
-  //     {
-  //       twitterId: "test2",
-  //       username: "test2",
-  //       profileImgUrl: "https://www.gstatic.com/webp/gallery/1.webp",
-  //     },
-  //   ],
-  // })
+  it("can paginate", () => {
+    cy.login().then((user) => {
+      cy.seed({
+        pins: Array.from({ length: 21 }).map((_, i) => ({
+          title: `pin ${i}`,
+          imageUrl: `https://www.gstatic.com/webp/gallery/${(i % 5) + 1}.webp`,
+          ownerId: user.id,
+        })),
+      })
 
-  // cy.seed({
-  //   pins: [
-  //     {
-  //       title: "test",
-  //       imageUrl: "https://www.gstatic.com/webp/gallery/1.webp",
-  //       ownerId: user.id,
-  //     },
-  //   ],
-  // })
+      cy.visit("/")
+
+      cy.contains("Showing 1 - 20 of 21")
+      cy.get("li.card").as("card").should("have.length", 20)
+      cy.findByRole("navigation", { name: /pagination/i })
+        .findAllByLabelText(/page/i)
+        .should("have.length", 2)
+
+      cy.findByLabelText("Page 2").click()
+      cy.url().should("contain", "?page=2")
+      cy.contains("Showing 21 - 21 of 21")
+      cy.get("@card").should("have.length", 1)
+    })
+  })
 })
