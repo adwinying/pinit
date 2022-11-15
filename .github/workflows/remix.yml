@@ -27,4 +27,7 @@ jobs:
       run: npm run db:migrate:test
 
     - name: Run unit tests
-      run: npm test
+      run: npm run test:unit run
+
+    - name: Run e2e tests
+      run: npm run cypress:run

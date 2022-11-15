@@ -18,7 +18,7 @@
     "db:migrate": "run-p -l db:migrate:*",
     "db:migrate:dev": "npx prisma migrate dev",
     "db:migrate:test": "env-cmd -f .env.test npx prisma db push --accept-data-loss",
-    "test": "run-s -l test:unit",
+    "test": "run-s -l \"test:unit run\" cypress:run",
     "test:unit": "env-cmd -f .env.test vitest",
     "test:coverage": "env-cmd -f .env.test vitest run --coverage",
     "cypress:prepare": "cp prisma/test.db prisma/test-e2e.db",
