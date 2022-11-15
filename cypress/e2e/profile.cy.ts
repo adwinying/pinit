@@ -47,6 +47,7 @@ describe("profile page", () => {
       .first()
       .as("likeButton")
       .click()
+    cy.reload()
     cy.get("@card")
       .findByRole("button", { name: /unlike pin/i })
       .first()
