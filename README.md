@@ -1,41 +1,28 @@
-# Welcome to Remix!
+# Pinit
 
-- [Remix Docs](https://remix.run/docs)
+A simple Pintrest clone. Rewrite of the [previous](https://github.com/adwinying/nodeapp-pinit) Express.js + Vue.js project.
 
-## Fly Setup
+## Tech Stack
 
-1. [Install `flyctl`](https://fly.io/docs/getting-started/installing-flyctl/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Remix](https://remix.run/)
+- [Remix Auth](https://github.com/sergiodxa/remix-auth)
+- [Prisma](https://www.prisma.io/)
+- [SQLite](https://www.sqlite.com/index.html)
+- [React](https://reactjs.org/)
+- [TailwindCSS](https://reactjs.org/) + [DaisyUI](https://daisyui.com/)
+- [zod](https://github.com/colinhacks/zod)
+- [ESlint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Vitest](https://vitest.dev/)
+- [Cypress](https://www.cypress.io/)
 
-2. Sign up and log in to Fly
+## Installation
 
-```sh
-flyctl auth signup
+```bash
+$ git clone git@github.com:adwinying/pinit.git
+$ cd pinit
+$ npm ci
+$ npm run db:migrate
+$ npm run dev
 ```
-
-3. Setup Fly. It might ask if you want to deploy, say no since you haven't built the app yet.
-
-```sh
-flyctl launch
-```
-
-## Development
-
-From your terminal:
-
-```sh
-npm run dev
-```
-
-This starts your app in development mode, rebuilding assets on file changes.
-
-## Deployment
-
-If you've followed the setup instructions already, all you need to do is run this:
-
-```sh
-npm run deploy
-```
-
-You can run `flyctl info` to get the url and ip address of your server.
-
-Check out the [fly docs](https://fly.io/docs/getting-started/node/) for more information.
