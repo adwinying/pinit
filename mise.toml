@@ -1,0 +1,6 @@
+[tools]
+"gem:kamal" = "latest"
+node = "16"
+
+[settings]
+experimental = true
