@@ -1,6 +1,14 @@
 [tools]
 "gem:kamal" = "latest"
 node = "16"
+"npm:figlet" = "latest"
+
+[hooks]
+enter = """
+figlet pinit
+echo "node: $(node --version)"
+echo "npm: v$(npm --version)"
+"""
 
 [settings]
 experimental = true
